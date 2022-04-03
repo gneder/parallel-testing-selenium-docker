@@ -26,7 +26,6 @@
 
     <parameter name="browser" value="edge"></parameter>
     <test name="edgetest">
-<!--        <parameter name="browser" value="edge"></parameter>-->
         <classes>
             <class name="testCases.SearchTest">
                 <methods>
