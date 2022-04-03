@@ -52,7 +52,7 @@ public class SearchTest {
 
         driver.get("https://www.google.com");
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        Thread.sleep(500);
     }
 
     @Test
@@ -60,10 +60,8 @@ public class SearchTest {
     {
         driver.findElement(By.xpath("//*[@name='q']")).sendKeys("neder medium");
         driver.findElement(By.xpath("//*[@name='q']")).sendKeys(Keys.ENTER);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Thread.sleep(500);
         driver.findElement(By.xpath("//h3[contains(text(),'neder - Medium')]")).click();
-//        WebElement textMedium = driver.findElement(By.xpath("//h3[contains(text(),'neder - Medium')]"));
-//        textMedium.click();
 
         String aboutMe = driver.getCurrentUrl();
         System.out.println(aboutMe);
