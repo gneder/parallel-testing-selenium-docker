@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--
+  Runs the same LoginTest in parallel across chrome, firefox and edge nodes
+  on a Selenium Grid. Start the grid first with:
+    docker-compose up -d
+  then run:
+    mvn test -DsuiteXmlFile=testng-grid.xml -DgridUrl=http://localhost:4444/wd/hub
+-->
+<suite name="Grid Cross-Browser Suite" verbose="1" parallel="tests" thread-count="3">
+
+    <test name="chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="testCases.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="testCases.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="edge">
+        <parameter name="browser" value="edge"/>
+        <classes>
+            <class name="testCases.LoginTest"/>
+        </classes>
+    </test>
+
+</suite>

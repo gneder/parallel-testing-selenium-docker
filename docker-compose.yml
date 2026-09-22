@@ -1,23 +1,14 @@
-# To execute this docker-compose yml file use `docker-compose -f docker-compose.yml up`
-# Add the `-d` flag at the end for detached execution
-# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose.yml down`
+# Starts a local Selenium Grid (chrome, firefox, edge nodes) for the
+# cross-browser parallel suite in testng-grid.xml.
+#
+# Usage:
+#   docker-compose up -d
+#   mvn test -DsuiteXmlFile=testng-grid.xml -DgridUrl=http://localhost:4444/wd/hub
+#   docker-compose down
 version: "3"
 services:
-  jenkins:
-    image: jenkins/jenkins:lts
-    privileged: true
-    user: root
-    ports:
-      - "8081:8080"
-      - "50000:50000"
-    container_name: jenkins
-    volumes:
-      - ~/jenkins:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - C:\Users\<your-user>\Documents\projetos\docker:/usr/local/bin/docker
-
   chrome:
-    image: selenium/node-chrome:4.1.2-20220217
+    image: selenium/node-chrome:4.21.0-20240517
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -27,7 +18,7 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   edge:
-    image: selenium/node-edge:4.1.2-20220217
+    image: selenium/node-edge:4.21.0-20240517
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -37,7 +28,7 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   firefox:
-    image: selenium/node-firefox:4.1.2-20220217
+    image: selenium/node-firefox:4.21.0-20240517
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -47,7 +38,7 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   selenium-hub:
-    image: selenium/hub:4.1.2-20220217
+    image: selenium/hub:4.21.0-20240517
     container_name: selenium-hub
     ports:
       - "4442:4442"

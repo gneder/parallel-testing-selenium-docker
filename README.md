@@ -1,83 +1,39 @@
-# Projeto de Automação para Testes de Aceitação
-> Projeto desenvolvido para testes automatizados e escaláveis em diversos dispositivos
+# Parallel Cross-Browser Testing with Selenium and Docker
 
-## Como usar:
+Selenium + TestNG + Maven test project demonstrating parallel, cross-browser
+test execution (Chrome, Firefox, Edge) using a Dockerized Selenium Grid.
 
-- [Instalação](#instalação)
-- [Cenários](#cenarios)
-- [Tecnologias](#tecnologias)
-- [Dependências](#dependências)
-- [Contribuindo](#contribuindo)
+The test scenario logs into [saucedemo.com](https://www.saucedemo.com/), a
+public demo e-commerce site, and verifies the login flow for both a valid
+user and a locked-out user.
 
----
+## Running locally (headless, no Docker needed)
 
-## Instalação
-### Clone
-
-- Clone este repositório para sua máquina local usando comando abaixo:
 ```
-$ git clone https://github.com/gneder/parallel-testing-selenium-docker.git
+mvn test
 ```
 
----
+This runs `testng.xml`, a single-browser suite against a local headless
+Chrome instance (via Selenium's built-in Selenium Manager) — this is what
+CI runs, so it works with zero setup.
 
-### Executar os testes via cmd:
+## Running the full cross-browser suite against a Selenium Grid
+
 ```
-$ mvn clean test
-```
-
----
-
-### Execução via IntelliJ
-
-Acessar o seguinte diretório
-```
-$ cd parallel-testing-selenium-docker/testng.xml
+docker-compose up -d
+mvn test -DsuiteXmlFile=testng-grid.xml -DgridUrl=http://localhost:4444/wd/hub
+docker-compose down
 ```
 
-Clicar com o botão direito do mouse em qualquer parte do arquivo
+This runs `testng-grid.xml`, which executes the same test in parallel across
+Chrome, Firefox and Edge nodes on the local grid started by
+`docker-compose.yml`.
 
-	- Selecionar a opção 'Run '...\testng.xml'
----
+## Tech stack
 
-## Cenários
-- [Pesquisar uma conta do Medium no Google]() (:white_check_mark:)
-
----
-
-## Tecnologias:
-- Java
-- Selenium
+- Java 17
+- Selenium WebDriver 4
 - TestNG
 - Maven
-- Git
-- Docker
-
----
-
-### Dependências
-* *[selenium](https://www.selenium.dev/)*
-* *[junit](https://junit.org/junit5/)*
-* *[testNG](https://testng.org/doc/)*
-
----
-
-## Contribuindo
-
-> Para contribuir com este projeto siga as seguintes etapas
-
-### Etapa 1
-
-- **Opção 1**
-    - Faça um fork 
-
-### Etapa 2
-
-- **Sinta-se livre para codificar!** 🔨🔨🔨
-    - Crie uma branch baseada na branch 'master' seguindo o padrão: feature/NUMERO-NOME-IMPLEMENTACAO
-
-### Etapa 3
-
-- 🔃 Crie um novo pull request para a branch 'master'
-
----
+- Docker / Selenium Grid
+- GitHub Actions CI
